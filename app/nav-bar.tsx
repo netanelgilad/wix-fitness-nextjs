@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import styles from "./nav-bar.module.css";
 import { NavLink, NavLinkProps } from "./nav-link";
 
@@ -33,6 +34,11 @@ export function NavBar() {
         <li style={{ float: "right" }}>
           <StyledNavLink href="/login">Login</StyledNavLink>
         </li>
+        <button onClick={() => {
+          const state = wixClient.auth.generateOauthRedirectState(window.location)
+          cookies().set('oauthState', state);
+          wixClient.auth.loginWithRedirect(state);
+        }}>Login</button>
       </ul>
     </nav>
   );
