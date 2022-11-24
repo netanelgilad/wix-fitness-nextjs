@@ -1,5 +1,6 @@
 import Image from "@app/components/Image/Image";
 import {getServiceBySlug} from "@model/service/service-api";
+import { cookies } from "next/headers";
 
 // export async function generateStaticParams() {
 //   const wixSession = await createWixVisitorSession();
@@ -9,6 +10,22 @@ import {getServiceBySlug} from "@model/service/service-api";
 // }
 
 export default async function ServicePage({params}: any) {
+  const wixMemberSession = cookies().get('wixMemberSession');
+  const wixVisitorSession = cookies().get('wixVisitorSession');
+  wixClient.auth.setTokens(wixMemberSession, wixVisitorSession);
+
+  try {
+    await wixClient.cart.createCart();
+  } catch (e) {
+    if (wixClient.auth.isUnauthorizedError(e)) {
+      const state = wixClient.auth.generateOauthRedirectState(window.location)
+      cookies().set('oauthState', state);
+      wixClient.auth.loginWithRedirect(state);
+    } else {
+      throw e;
+    }
+  }
+
   const service = await getServiceBySlug(params.slug);
 
   return (
