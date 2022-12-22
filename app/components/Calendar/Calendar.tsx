@@ -26,7 +26,7 @@ import {
   useFormattedTimezone,
   useUserTimezone,
 } from '@app/hooks/useFormattedTimezone';
-import { SlotAvailability } from '@model/availability/types';
+import { Slot, SlotAvailability } from '@model/availability/types';
 import { Spinner, Tooltip } from 'flowbite-react';
 import JSURL from 'jsurl';
 import { WixSession } from '../../../src/auth';
@@ -44,7 +44,8 @@ const TIME_FORMAT = 'hh:mm a';
 
 type SlotViewModel = {
   formattedTime: string;
-} & Pick<SlotAvailability, 'bookable' | 'bookingPolicyViolations'>;
+  slotAvailability: SlotAvailability;
+};
 
 export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -75,15 +76,7 @@ export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
     setDateRange(getCalendarMonthRangeForDate(selectedDate!));
     setSelectedTime('');
   }, [selectedDate]);
-  useEffect(() => {
-    setSelectedSlot(
-      dayData?.availabilityEntries?.find(
-        (availableEntry) =>
-          format(new Date(availableEntry.slot!.startDate!), TIME_FORMAT) ===
-          selectedTime
-      )
-    );
-  }, [selectedTime, dayData]);
+
   const goToCheckout = useCallback(() => {
     const checkoutUrl = new URL(
       decodeURIComponent(process.env.NEXT_PUBLIC_BOOKINGS_CHECKOUT_URL!)
@@ -117,18 +110,24 @@ export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
             new Date(slotData.slot!.startDate!),
             TIME_FORMAT
           ),
-          bookable: slotData.bookable,
-          bookingPolicyViolations: slotData.bookingPolicyViolations,
+          slotAvailability: slotData,
         }))
         .reduce<{ [key: string]: SlotViewModel[] }>((acc, curr) => {
           const slotsArr = acc[curr.formattedTime] ?? [];
           // prefer bookable slots
-          slotsArr[curr.bookable ? 'unshift' : 'push'](curr);
+          slotsArr[curr.slotAvailability.bookable ? 'unshift' : 'push'](curr);
           acc[curr.formattedTime] = slotsArr;
           return acc;
         }, {}) ?? {}
     );
   }, [dayData]);
+  useEffect(() => {
+    setSelectedSlot(
+      slotsMap[selectedTime]?.length === 1
+        ? slotsMap[selectedTime]?.[0]?.slotAvailability
+        : undefined
+    );
+  }, [selectedTime, dayData, slotsMap]);
 
   return (
     <div className="flex flex-wrap">
@@ -173,7 +172,10 @@ export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
                   .map((slotTime) => slotsMap[slotTime][0])
                   .map(
                     (
-                      { formattedTime, bookable, bookingPolicyViolations },
+                      {
+                        formattedTime,
+                        slotAvailability: { bookable, bookingPolicyViolations },
+                      },
                       index
                     ) => (
                       <button
@@ -217,11 +219,46 @@ export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
           </div>
           <section className="text-xs mt-1">
             <div>{formattedPrice.userFormattedPrice}</div>
-            {selectedSlot && (
+            {slotsMap?.[selectedTime]?.length > 1 ? (
+              <>
+                <label htmlFor="slot-options" className="mt-3 block">
+                  Please Select a Slot Option
+                </label>
+                <select
+                  value={selectedSlot ? undefined : ''}
+                  id="slot-options"
+                  className="block w-full p-2 my-3 text-sm text-black border border-black rounded-none bg-white focus:ring-gray-700 focus:border-black"
+                  onChange={(e) =>
+                    setSelectedSlot(
+                      slotsMap[selectedTime][e.target.value as unknown as any]
+                        .slotAvailability
+                    )
+                  }
+                >
+                  <option disabled selected value="">
+                    Please Select
+                  </option>
+                  {slotsMap[selectedTime].map((slotOption, index) => (
+                    <option
+                      key={index}
+                      disabled={!slotOption.slotAvailability.bookable}
+                      value={index}
+                    >
+                      {`${
+                        slotOption.slotAvailability.slot?.location?.name ?? ''
+                      } with ${
+                        slotOption.slotAvailability.slot?.resource?.name ?? ''
+                      }`.trim()}
+                    </option>
+                  ))}
+                </select>
+              </>
+            ) : selectedSlot ? (
               <>
                 <div>{selectedSlot.slot?.resource?.name}</div>
+                <div>{selectedSlot.slot?.location?.name}</div>
               </>
-            )}
+            ) : null}
           </section>
           <div className="mt-7">
             <button
