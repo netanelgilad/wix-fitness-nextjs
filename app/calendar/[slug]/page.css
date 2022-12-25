@@ -12,6 +12,10 @@
   @apply m-[2px];
 }
 
+.rdp-button.rdp-day_today:not(.rdp-day_selected) {
+  @apply bg-gray-100;
+}
+
 .rdp-button.rdp-day_selected:hover {
   @apply bg-gray-700;
 }
