@@ -3,6 +3,7 @@ import { getPaidPlans } from '@model/paid-plans/paid-plans-api';
 import { formatCurrencyToParts } from '@app/utils/price-formtter';
 import { Duration as PlanDuration, PeriodUnit } from '@model/paid-plans/types';
 import { getCheckoutUrl } from '@model/paid-plans/paid-plans-checkout';
+import { useRouter } from 'next/navigation';
 
 const durationPeriodFormatter = (
   period: PeriodUnit = PeriodUnit.UNDEFINED
@@ -29,9 +30,19 @@ const formatPlanDuration = (duration: PlanDuration) => {
   }`;
 };
 
-export default async function PlansPage() {
+export default async function PlansPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string };
+}) {
+  const { planIds, navigateToSectionProps, maxStartDate } = searchParams;
   const wixSession = useServerAuthSession();
-  const { plans } = await getPaidPlans({}, wixSession);
+  const { plans } = await getPaidPlans(
+    {
+      planIds: planIds ? planIds?.split(',') : undefined,
+    },
+    wixSession
+  );
   return (
     <div className="max-w-full-content mx-auto pb-8">
       <div className="px-5">
@@ -76,7 +87,11 @@ export default async function PlansPage() {
                   </div>
                   <a
                     className="btn-main w-full cursor-pointer mt-5"
-                    href={getCheckoutUrl(plan)}
+                    href={getCheckoutUrl({
+                      plan,
+                      navigateToSectionProps,
+                      maxStartDate,
+                    })}
                   >
                     Select
                   </a>
