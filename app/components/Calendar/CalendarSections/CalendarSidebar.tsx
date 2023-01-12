@@ -29,6 +29,7 @@ const CalendarSidebar = ({
     service!.payment!.paymentDetails
   );
   const goToCheckout = useCallback(() => {
+    // TODO: use redirect to wix sdk
     const checkoutUrl = new URL(
       decodeURIComponent(process.env.NEXT_PUBLIC_BOOKINGS_CHECKOUT_URL!)
     );
@@ -39,11 +40,18 @@ const CalendarSidebar = ({
     });
     checkoutUrl.searchParams.set('selectedSlot', slotData);
     checkoutUrl.searchParams.set('origin', window.location.origin);
+    checkoutUrl.searchParams.set(
+      'headlessExternalUrls',
+      JSURL.stringify({
+        'paid-plans': window.location.origin + '/plans',
+      })
+    );
 
     // TODO: USE PR VERSION TILL BOOKINGS EXPOSE A FORMAL API FOR DEEP LINK
     checkoutUrl.searchParams.set(
       'bookings-form-widget-override',
-      '8f195c0a4352e33353b8a8e7dbe2e2d17025ddc023572140c14eba1f'
+      // https://github.com/wix-private/bookings-booking-checkout-viewer/pull/570
+      '776076fcba105820efa8645dd02846d8441af73f559e59a6f1c8813d'
     );
 
     window.location.href = checkoutUrl.toString();

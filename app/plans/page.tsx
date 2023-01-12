@@ -3,7 +3,6 @@ import { getPaidPlans } from '@model/paid-plans/paid-plans-api';
 import { formatCurrencyToParts } from '@app/utils/price-formtter';
 import { Duration as PlanDuration, PeriodUnit } from '@model/paid-plans/types';
 import { getCheckoutUrl } from '@model/paid-plans/paid-plans-checkout';
-import { useRouter } from 'next/navigation';
 
 const durationPeriodFormatter = (
   period: PeriodUnit = PeriodUnit.UNDEFINED
