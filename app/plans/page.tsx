@@ -3,6 +3,7 @@ import { getPaidPlans } from '@model/paid-plans/paid-plans-api';
 import { formatCurrencyToParts } from '@app/utils/price-formtter';
 import { Duration as PlanDuration, PeriodUnit } from '@model/paid-plans/types';
 import { getCheckoutUrl } from '@model/paid-plans/paid-plans-checkout';
+import PlanSelect from '@app/components/Plan/PlanSelect';
 
 const durationPeriodFormatter = (
   period: PeriodUnit = PeriodUnit.UNDEFINED
@@ -84,16 +85,17 @@ export default async function PlansPage({
                           plan.pricing?.singlePaymentForDuration!
                         )}`}
                   </div>
-                  <a
-                    className="btn-main w-full cursor-pointer mt-5"
-                    href={getCheckoutUrl({
+                  <PlanSelect
+                    checkoutUrl={getCheckoutUrl({
                       plan,
                       navigateToSectionProps,
                       maxStartDate,
                     })}
                   >
-                    Select
-                  </a>
+                    <div className="btn-main w-full cursor-pointer mt-5">
+                      Select
+                    </div>
+                  </PlanSelect>
                 </div>
                 <div className="bg-white px-9 py-5 flex flex-col justify-start items-center w-full h-56 overflow-y-auto">
                   <ul>
