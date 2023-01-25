@@ -21,7 +21,7 @@ export default async function ServicePage({ params }: any) {
   );
 
   return (
-    <div className="max-w-full-content mx-auto bg-white px-28">
+    <div className="max-w-full-content mx-auto bg-white px-6 sm:px-28">
       {service ? (
         <div className="full-w rounded overflow-hidden max-w-7xl mx-auto">
           <div className="mt-14 mb-8 pb-8 border-b border-black w-full">

@@ -2,15 +2,33 @@ import './footer.css';
 import Image from 'next/image';
 import ScrollIntoView from '@app/components/ScrollIntoView/ScrollIntoView';
 
+const FooterNote = () => (
+  <div className="text-xs">
+    <p>© 2023 by Personal Life Coach.</p>
+    <p>
+      <span>Powered and secured by </span>
+      <span>
+        <a
+          className="underline"
+          href="https://wix.com/?utm_campaign=vir_created_with"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Wix
+        </a>
+      </span>
+    </p>
+  </div>
+);
+
 const Footer = () => (
   <footer className="w-fullm-h-56 bg-turquoise-100 leading-7">
-    <ScrollIntoView hashName="#contact" />
-    <div className="max-w-full-content mx-auto flex gap-2 pt-11 pb-20">
+    <div className="max-w-full-content mx-auto sm:flex gap-2 pt-11 pb-20">
       <div className="flex-1">
-        <div className="pl-6">
+        <div className="px-6 sm:pr-0">
           <div className="header-line"></div>
           <p className="font-lulo mb-10">Contact</p>
-          <div className="text-sm tracking-wide mb-5">
+          <div className="text-sm tracking-wide sm:mb-5">
             <p>
               <span>500 Terry Francois Street</span>
             </p>
@@ -103,26 +121,15 @@ const Footer = () => (
               </li>
             </ul>
           </div>
-          <div className="text-xs mb-16">
-            <p>© 2023 by Personal Life Coach.</p>
-            <p>
-              <span>Powered and secured by </span>
-              <span>
-                <a
-                  href="https://wix.com/?utm_campaign=vir_created_with"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  Wix
-                </a>
-              </span>
-            </p>
+          <div className="mb-16 hidden sm:block">
+            <FooterNote />
           </div>
         </div>
       </div>
       <div className="flex-1">
         <form>
-          <div className="pr-9">
+          <ScrollIntoView hashName="#contact" />
+          <div className="px-6 sm:pl-0 sm:pr-9">
             <div className="footer-form-field">
               <label htmlFor="contact-form-name" className="footer-form-label">
                 Enter Your Name
@@ -189,11 +196,14 @@ const Footer = () => (
             </div>
             <div aria-disabled="false" className="flex justify-end mt-4 mb-10">
               <button
-                className="btn-main w-full p-1 w-32"
+                className="btn-main w-full p-1 w-full sm:w-32"
                 aria-disabled="false"
               >
                 <span>Submit</span>
               </button>
+            </div>
+            <div className="sm:hidden">
+              <FooterNote />
             </div>
           </div>
         </form>

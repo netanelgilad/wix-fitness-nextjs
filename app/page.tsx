@@ -1,10 +1,12 @@
 import './page.css';
 import ServiceListPreview from '@app/components/ServiceList/ServiceListPreview';
-import { useServerAuthSession } from '@app/hooks/useServerAuthSession';
 import ScrollIntoView from '@app/components/ScrollIntoView/ScrollIntoView';
+import { useServerAuthSession } from '@app/hooks/useServerAuthSession';
+import { getServices } from '@model/service/service-api';
 
-export default function Home() {
+export default async function Home() {
   const wixSession = useServerAuthSession();
+  const { services } = await getServices({ limit: 3 }, wixSession);
   return (
     <div>
       <div className="text-center w-full min-h-screen relative">
@@ -14,11 +16,11 @@ export default function Home() {
             type="video/mp4"
           />
         </video>
-        <div className="text-center">
+        <div className="text-center px-3">
           <div className="font-sans font-bold uppercase tracking-widest pt-16">
             Ambition is the first step towards
           </div>
-          <div className="font-lulo text-8xl pt-4">Success</div>
+          <div className="font-lulo text-4xl sm:text-8xl pt-4">Success</div>
           <div className="text-xl pt-6 tracking-wider">
             Now Available for Online Coaching
           </div>
@@ -34,7 +36,7 @@ export default function Home() {
         <ScrollIntoView hashName="#about" offset="-128px" />
         <div className="w-full bg-white h-full relative">
           <div className="max-w-full-content mx-auto h-full">
-            <div className="pl-5 pr-24 py-2 w-2/4">
+            <div className="pl-5 py-2 pr-5 sm:w-2/4 sm:pr-24 sm:pr-0">
               <div className="header-line my-8"></div>
               <h2 className="mb-7 mt-10 tracking-tighter max-w-xs title">
                 About me
@@ -60,8 +62,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="absolute top-0 left-2/4 w-2/4 h-full">
-            <div className="bg-[url('/about-me.jpeg')] w-full h-full bg-cover"></div>
+          <div className="w-full sm:absolute sm:top-0 sm:left-2/4 sm:w-2/4 h-full">
+            <div className="bg-[url('/about-me.jpeg')] w-full h-full bg-cover min-h-[320px]"></div>
           </div>
         </div>
       </div>
@@ -71,7 +73,7 @@ export default function Home() {
           <h2 className="mb-7 mt-10 tracking-tighter title max-w-xs">
             How I Can Help You
           </h2>
-          <ServiceListPreview wixSession={wixSession} />
+          <ServiceListPreview services={services} />
           <div className="flex my-8 justify-center">
             <a className="btn-main" href="/book-now">
               More Services

@@ -1,31 +1,24 @@
 'use client';
 import { ServiceInfoViewModel } from '@model/service/service.mapper';
 import { useServiceFormattedPrice } from '@app/hooks/useServiceFormattedPrice';
-import { useServices } from '@app/hooks/useServices';
-import { WixSession } from '../../../src/auth';
-import { Spinner } from 'flowbite-react';
-import { WixBookingsClientProvider } from '@app/components/Provider/WixBookingsClientProvider';
 
-function ServiceListPreviewView() {
-  const { data, isLoading } = useServices({ limit: 3 });
-  const smClassName = (data?.services?.length ?? 0) > 1 ? 'sm:grid-cols-2' : '';
-  const mdClassName = (data?.services?.length ?? 0) > 2 ? 'md:grid-cols-3' : '';
+export default function ServiceListPreviewView({
+  services,
+}: {
+  services: ServiceInfoViewModel[];
+}) {
+  const smClassName = (services?.length ?? 0) > 1 ? 'sm:grid-cols-2' : '';
+  const mdClassName = (services?.length ?? 0) > 2 ? 'md:grid-cols-3' : '';
 
   return (
     <>
-      {isLoading ? (
-        <div className="w-full h-36 flex items-center justify-center">
-          <Spinner color="gray" />
-        </div>
-      ) : (
-        <div
-          className={`mx-auto flex flex-wrap my-3 m-auto grid grid-cols-1 gap-4 ${smClassName} ${mdClassName}`}
-        >
-          {data?.services?.map((service, index) => (
-            <ServiceCardPreview service={service} key={service.id} />
-          ))}
-        </div>
-      )}
+      <div
+        className={`mx-auto flex flex-wrap my-3 m-auto grid grid-cols-1 gap-4 ${smClassName} ${mdClassName}`}
+      >
+        {services?.map((service, index) => (
+          <ServiceCardPreview service={service} key={service.id} />
+        ))}
+      </div>
     </>
   );
 }
@@ -64,15 +57,3 @@ const ServiceCardPreview = ({ service }: { service: ServiceInfoViewModel }) => {
     </div>
   );
 };
-
-export default function ServiceListPreview({
-  wixSession,
-}: {
-  wixSession: WixSession;
-}) {
-  return (
-    <WixBookingsClientProvider wixSession={wixSession}>
-      <ServiceListPreviewView />
-    </WixBookingsClientProvider>
-  );
-}

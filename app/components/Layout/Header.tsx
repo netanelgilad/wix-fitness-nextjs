@@ -1,6 +1,6 @@
 import { NavBar } from '@app/components/Layout/NavBar/NavBar';
 
-const Header = () => (
+const Header = ({ isMobile }: { isMobile: boolean }) => (
   <>
     <header className="fixed h-header bg-white z-40 w-full">
       <div className="flex justify-center max-w-full-content mx-auto gap-8 h-header items-center">
