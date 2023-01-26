@@ -2,11 +2,8 @@ import './globals.css';
 import Footer from '@app/components/Layout/Footer';
 import Header from '@app/components/Layout/Header';
 import { useServerAuthSession } from '@app/hooks/useServerAuthSession';
-import { useViewport } from '@app/hooks/useViewport';
 
 export default function RootLayout(layoutProps: any) {
-  const { isMobile } = useViewport();
-  console.log('*** is mobile', isMobile);
   const { children } = layoutProps;
   const wixSession = useServerAuthSession();
   return (
@@ -22,7 +19,7 @@ export default function RootLayout(layoutProps: any) {
       </head>
       {wixSession.siteId && wixSession.apiKey ? (
         <body className="parallax-background">
-          <Header isMobile={isMobile} />
+          <Header />
           <main className="bg-transparent min-h-[600px]">{children}</main>
           <Footer />
         </body>

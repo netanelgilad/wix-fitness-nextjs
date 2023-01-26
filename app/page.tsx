@@ -20,7 +20,9 @@ export default async function Home() {
           <div className="font-sans font-bold uppercase tracking-widest pt-16">
             Ambition is the first step towards
           </div>
-          <div className="font-lulo text-4xl sm:text-8xl pt-4">Success</div>
+          <div className="font-lulo text-4xl sm:text-6xl md:text-8xl pt-4">
+            Success
+          </div>
           <div className="text-xl pt-6 tracking-wider">
             Now Available for Online Coaching
           </div>
