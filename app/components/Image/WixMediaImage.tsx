@@ -7,7 +7,7 @@ export function getImageUrlForMedia(
   height: number = media?.height ?? 320
 ) {
   const imageUrl = media?.url
-    ? wixMedia.getScaledToFitImageUrl(
+    ? wixMedia.getScaledToFillImageUrl(
         `wix:image://v1/${media.url}#originWidth=${width}&originHeight=${height}` +
           media?.url,
         width,
