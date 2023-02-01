@@ -1,14 +1,5 @@
-import {
-  QueryAvailabilityRequest,
-  QueryAvailabilityResponse,
-} from '@model/availability/types';
-import { WixSession } from '../../auth';
-
-// TODO: CORS WA till using SDK
-const BOOKINGS_AVAILABILITY_API =
-  typeof window === 'undefined'
-    ? 'https://www.wixapis.com/availability-calendar/v1/availability/query'
-    : '/api/v1/availability/query';
+import { WixSession } from '../auth/auth';
+import { availabilityCalendar } from '@wix/bookings';
 
 export const getServiceAvailability = (
   {
@@ -25,7 +16,7 @@ export const getServiceAvailability = (
     slotsPerDay?: number;
   },
   wixSession: WixSession
-): Promise<QueryAvailabilityResponse> =>
+): Promise<availabilityCalendar.QueryAvailabilityResponse> =>
   queryAvailability({
     input: {
       slotsPerDay,
@@ -45,15 +36,10 @@ const queryAvailability = ({
   input,
   wixSession,
 }: {
-  input: QueryAvailabilityRequest;
+  input: availabilityCalendar.QueryAvailabilityRequest;
   wixSession: WixSession;
 }) =>
-  fetch(BOOKINGS_AVAILABILITY_API, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: wixSession.apiKey,
-      'wix-site-id': wixSession.siteId,
-    },
-    body: JSON.stringify(input),
-  }).then((res) => res.json());
+  wixSession!.wixClient!.availabilityCalendar.queryAvailability(input.query!, {
+    timezone: input.timezone,
+    slotsPerDay: input.slotsPerDay,
+  });

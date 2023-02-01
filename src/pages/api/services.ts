@@ -7,12 +7,11 @@ export default async function handler(
   res: NextApiResponse<GetServicesResponse | string>
 ) {
   const { query } = req.body;
-  const apiKey = req.headers.authorization as string;
-  const siteId = req.headers['wix-site-id'] as string;
-  if (!apiKey || !siteId) {
+  const authorization = req.headers.authorization as string;
+  if (!authorization) {
     res.status(403).send('Error missing security headers');
   } else if (req.method === 'POST') {
-    getServices(query, { apiKey, siteId })
+    getServices(query, undefined, authorization)
       .then((result) => {
         res.status(200).json(result);
       })

@@ -17,7 +17,7 @@ export default function RootLayout(layoutProps: any) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </head>
-      {wixSession.siteId && wixSession.apiKey ? (
+      {wixSession.wixClient ? (
         <body className="parallax-background">
           <Header />
           <main className="bg-transparent min-h-[600px]">{children}</main>

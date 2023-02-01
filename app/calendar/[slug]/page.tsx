@@ -25,7 +25,7 @@ export default async function CalendarPage({ params }: any) {
             className="full-w rounded overflow-hidden max-w-7xl mx-auto"
           >
             <Suspense fallback={'Loading...'}>
-              <Calendar service={service} wixSession={wixSession} />
+              <Calendar service={service} />
             </Suspense>
           </div>
         </>

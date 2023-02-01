@@ -75,12 +75,16 @@ export default async function Home() {
           <h2 className="mb-7 mt-10 tracking-tighter title max-w-xs">
             How I Can Help You
           </h2>
-          <ServiceListPreview services={services} />
-          <div className="flex my-8 justify-center">
-            <a className="btn-main" href="/book-now">
-              More Services
-            </a>
-          </div>
+          {services?.length ? (
+            <>
+              <ServiceListPreview services={services} />
+              <div className="flex my-8 justify-center">
+                <a className="btn-main" href="/book-now">
+                  More Services
+                </a>
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
     </div>

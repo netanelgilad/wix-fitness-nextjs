@@ -1,8 +1,5 @@
-import {
-  PagingMetadataV2,
-  QueryPublicPlansResponse,
-} from '@model/paid-plans/types';
-import { WixSession } from '../../auth';
+import { QueryPublicPlansResponse } from '@model/paid-plans/types';
+import { WixSession } from '../auth/auth';
 
 const PAID_PLANS_API =
   'https://www.wixapis.com/pricing-plans/v2/plans/public/query';
@@ -37,13 +34,14 @@ const fetchPublicPlans = ({
   input: any;
   wixSession: WixSession;
 }) => {
-  return fetch(PAID_PLANS_API, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: wixSession.apiKey,
-      'wix-site-id': wixSession.siteId,
-    },
-    body: JSON.stringify(input),
-  }).then((res) => res.json());
+  return wixSession!.tokensPromise!.then((tokens) =>
+    fetch(PAID_PLANS_API, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: tokens.accessToken,
+      },
+      body: JSON.stringify(input),
+    }).then((res) => res.json())
+  );
 };

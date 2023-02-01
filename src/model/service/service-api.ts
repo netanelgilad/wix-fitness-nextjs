@@ -3,7 +3,7 @@ import {
   ServiceInfoViewModel,
 } from '@model/service/service.mapper';
 import { PagingMetadataV2 } from '@model/service/types';
-import { WixSession } from '../../auth';
+import { WixSession } from '../auth/auth';
 
 const BOOKINGS_SERVICES_API =
   'https://www.wixapis.com/bookings/v1/catalog/services';
@@ -15,7 +15,8 @@ export type GetServicesResponse = {
 
 export const getServices = (
   { limit = 100 },
-  wixSession: WixSession
+  wixSession?: WixSession,
+  authorization?: string
 ): Promise<GetServicesResponse> =>
   fetchServices({
     input: {
@@ -28,6 +29,7 @@ export const getServices = (
       isBookOnlineAllowed: false,
     },
     wixSession,
+    authorization,
   }).then(({ services, pagingMetadata }) => ({
     services: services.map(mapServiceInfo),
     pagingMetadata,
@@ -35,13 +37,15 @@ export const getServices = (
 
 export const getServiceBySlug = (
   serviceSlug: string,
-  wixSession: WixSession
+  wixSession?: WixSession,
+  authorization?: string
 ): Promise<ServiceInfoViewModel | null> =>
   getServiceByFilter(
     {
       'slugs.name': serviceSlug,
     },
-    wixSession
+    wixSession,
+    authorization
   );
 
 export const getServiceById = (
@@ -57,7 +61,8 @@ export const getServiceById = (
 
 const getServiceByFilter = (
   filter: any,
-  wixSession: WixSession
+  wixSession?: WixSession,
+  authorization?: string
 ): Promise<ServiceInfoViewModel | null> =>
   fetchServices({
     input: {
@@ -72,24 +77,31 @@ const getServiceByFilter = (
       isBookOnlineAllowed: true,
     },
     wixSession,
+    authorization,
   }).then(({ services: [service] }) =>
     service ? mapServiceInfo(service) : null
   );
 
-const fetchServices = ({
+const fetchServices = async ({
   input,
   wixSession,
+  authorization,
 }: {
   input: any;
-  wixSession: WixSession;
+  wixSession?: WixSession;
+  authorization?: string;
 }) => {
+  const authorizationValue =
+    authorization ??
+    (await wixSession!.tokensPromise?.then((tokens) => tokens.accessToken))!;
   return fetch(BOOKINGS_SERVICES_API, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: wixSession.apiKey,
-      'wix-site-id': wixSession.siteId,
+      Authorization: authorizationValue,
     },
     body: JSON.stringify(input),
-  }).then((res) => res.json());
+  })
+    .then((res) => res.json())
+    .catch(console.error);
 };

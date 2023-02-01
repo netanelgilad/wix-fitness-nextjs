@@ -4,9 +4,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import { useServiceFormattedPrice } from '@app/hooks/useServiceFormattedPrice';
-import { SlotAvailability } from '@model/availability/types';
 import JSURL from 'jsurl';
 import { SlotViewModel } from '@app/components/Calendar/CalendarSections/CalendarSlots';
+import { availabilityCalendar } from '@wix/bookings';
 
 const CalendarSidebar = ({
   service,
@@ -23,7 +23,7 @@ const CalendarSidebar = ({
   selectedSlot?: SlotViewModel['slotAvailability'];
 }) => {
   const [selectedSlot, setSelectedSlot] = useState<
-    SlotAvailability | undefined
+    availabilityCalendar.SlotAvailability | undefined
   >();
   const formattedPrice = useServiceFormattedPrice(
     service!.payment!.paymentDetails

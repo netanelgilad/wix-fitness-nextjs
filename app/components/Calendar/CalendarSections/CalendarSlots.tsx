@@ -1,11 +1,11 @@
 'use client';
 import { PropsWithChildren } from 'react';
-import { SlotAvailability } from '@model/availability/types';
 import { Tooltip } from 'flowbite-react';
+import type { availabilityCalendar } from '@wix/bookings';
 
 export type SlotViewModel = {
   formattedTime: string;
-  slotAvailability: SlotAvailability;
+  slotAvailability: availabilityCalendar.SlotAvailability;
 };
 
 const SlotTooltip = ({
@@ -13,7 +13,10 @@ const SlotTooltip = ({
   bookingPolicyViolations,
   children,
 }: PropsWithChildren<
-  Pick<SlotAvailability, 'bookable' | 'bookingPolicyViolations'>
+  Pick<
+    availabilityCalendar.SlotAvailability,
+    'bookable' | 'bookingPolicyViolations'
+  >
 >) =>
   bookable ? (
     <div className="w-fit">{children}</div>

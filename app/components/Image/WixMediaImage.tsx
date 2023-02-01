@@ -1,5 +1,5 @@
 import { ServiceImage } from '@model/service/service.mapper';
-import { media as wixMedia } from '@wix/sdk';
+import { media as wixMedia } from '@wix/api-client';
 
 export function getImageUrlForMedia(
   media?: ServiceImage,
@@ -7,7 +7,7 @@ export function getImageUrlForMedia(
   height: number = media?.height ?? 320
 ) {
   const imageUrl = media?.url
-    ? wixMedia.getScaleToFillImageUrl(
+    ? wixMedia.getScaledToFitImageUrl(
         `wix:image://v1/${media.url}#originWidth=${width}&originHeight=${height}` +
           media?.url,
         width,

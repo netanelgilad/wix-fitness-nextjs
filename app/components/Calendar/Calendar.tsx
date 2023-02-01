@@ -14,13 +14,13 @@ import {
 } from 'date-fns';
 
 // react-day-picker/dist/index.js incorrectly uses "require"
+// @ts-ignore
 import { DayPicker } from 'react-day-picker/dist/index.esm';
 import {
   useFormattedTimezone,
   useUserTimezone,
 } from '@app/hooks/useFormattedTimezone';
 import { Spinner } from 'flowbite-react';
-import { WixSession } from '../../../src/auth';
 import CalendarSlots, {
   SlotViewModel,
 } from '@app/components/Calendar/CalendarSections/CalendarSlots';
@@ -98,7 +98,7 @@ export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
           <section className="mt-2">
             <DayPicker
               modifiers={{
-                daysWithSlots: (date) =>
+                daysWithSlots: (date: Date | number) =>
                   !!rangeData?.availabilityEntries?.some(({ slot }) =>
                     isSameDay(date, new Date(slot!.startDate!))
                   ),
@@ -110,7 +110,7 @@ export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
               }}
               mode="single"
               selected={selectedDate}
-              onSelect={(date) => date && setSelectedDate(date)}
+              onSelect={(date?: Date) => date && setSelectedDate(date)}
               onMonthChange={setSelectedDate}
               showOutsideDays
               fixedWeeks
@@ -154,13 +154,11 @@ export function CalendarView({ service }: { service: ServiceInfoViewModel }) {
 
 export default function Calendar({
   service,
-  wixSession,
 }: {
   service: ServiceInfoViewModel;
-  wixSession: WixSession;
 }) {
   return (
-    <WixBookingsClientProvider wixSession={wixSession}>
+    <WixBookingsClientProvider>
       <CalendarView service={service} />
     </WixBookingsClientProvider>
   );
