@@ -6,7 +6,8 @@ import { format } from 'date-fns';
 import { useServiceFormattedPrice } from '@app/hooks/useServiceFormattedPrice';
 import JSURL from 'jsurl';
 import { SlotViewModel } from '@app/components/Calendar/CalendarSections/CalendarSlots';
-import { availabilityCalendar } from '@wix/bookings';
+import type { availabilityCalendar } from '@wix/bookings';
+import { useClientAuthSession } from '@app/hooks/useClientAuthSession';
 
 const CalendarSidebar = ({
   service,
@@ -22,13 +23,29 @@ const CalendarSidebar = ({
   slotsForTime: SlotViewModel[];
   selectedSlot?: SlotViewModel['slotAvailability'];
 }) => {
+  const session = useClientAuthSession();
   const [selectedSlot, setSelectedSlot] = useState<
     availabilityCalendar.SlotAvailability | undefined
   >();
+  const [redirecting, setRedirecting] = useState<boolean>(false);
   const formattedPrice = useServiceFormattedPrice(
     service!.payment!.paymentDetails
   );
   const goToCheckout = useCallback(() => {
+    setRedirecting(true);
+    session!
+      .wixClient!.redirects.createRedirectSession({
+        bookingsCheckout: {
+          slot: [selectedSlot!],
+          timezone,
+          serviceId: service.id,
+        },
+      })
+      .then(console.log)
+      .catch((e) => {
+        console.error(e);
+        setRedirecting(false);
+      });
     // TODO: use redirect to wix sdk
     const checkoutUrl = new URL(
       decodeURIComponent(process.env.NEXT_PUBLIC_BOOKINGS_CHECKOUT_URL!)
@@ -54,8 +71,8 @@ const CalendarSidebar = ({
       '776076fcba105820efa8645dd02846d8441af73f559e59a6f1c8813d'
     );
 
-    window.location.href = checkoutUrl.toString();
-  }, [selectedSlot?.slot, service?.id, timezone]);
+    // window.location.href = checkoutUrl.toString();
+  }, [selectedSlot, service.id, session, timezone]);
   useEffect(() => {
     setSelectedSlot(
       slotsForTime?.length === 1
@@ -121,7 +138,7 @@ const CalendarSidebar = ({
         </section>
         <div className="mt-7">
           <button
-            disabled={!selectedSlot}
+            disabled={!selectedSlot || redirecting}
             className="btn-main w-full"
             onClick={goToCheckout}
           >
