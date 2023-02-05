@@ -6,7 +6,7 @@ A [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](h
 
 ## Getting Started
 
-### Obtaining a Wix Bookings API key
+### Obtaining a Wix Bookings Client ID
 In order to be able to integrate with the Wix Bookings system (with paid plans support), you should first define a business in Wix.
 1. [Create a site in Wix](https://www.wix.com/blog/2016/06/how-to-create-website-step-by-step-guide/)
 2. [Add "Wix Bookings" to your business](https://support.wix.com/en/wix-bookings/setting-up-wix-bookings) (And set it up)
@@ -19,7 +19,12 @@ NEXT_PUBLIC_WIX_CLIENT_ID=<Client ID>
 
 ### Local Development
 First, make sure `.env.local` contains a valid client ID (`NEXT_PUBLIC_WIX_CLIENT_ID`).<br>
-You can just run `cp .env.template .env.local` and update the value.<br>
+You can just run 
+```shell
+cp .env.template .env.local
+```
+and update the Client ID value.<br>
+
 *Note*: client ID should not be pushed to your source control 
 
 
