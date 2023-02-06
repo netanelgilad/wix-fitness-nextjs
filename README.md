@@ -53,4 +53,5 @@ To learn more about Next.js, take a look at the following resources:
 
 ## Deployment
 You can deploy this repo using any platform which supports `Next.js` 13 (And app directory roadmap)
+
 The repository only require a single environment variable to be defined `NEXT_PUBLIC_WIX_CLIENT_ID` which points to the client ID which provides the access to the business assets in Wix
