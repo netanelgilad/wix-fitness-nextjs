@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import { useServiceFormattedPrice } from '@app/hooks/useServiceFormattedPrice';
-import JSURL from 'jsurl';
 import { SlotViewModel } from '@app/components/Calendar/CalendarSections/CalendarSlots';
 import type { availabilityCalendar } from '@wix/bookings';
 import { useClientAuthSession } from '@app/hooks/useClientAuthSession';
@@ -40,38 +39,18 @@ const CalendarSidebar = ({
           timezone,
           serviceId: service.id,
         },
+        callbacks: {
+          postFlowUrl: window.location.origin,
+          plansListUrl: window.location.origin + '/plans',
+        },
       })
-      .then(console.log)
+      .then(({ redirectSession }) => {
+        window.location.href = redirectSession!.fullUrl!;
+      })
       .catch((e) => {
         console.error(e);
         setRedirecting(false);
       });
-    // TODO: use redirect to wix sdk
-    const checkoutUrl = new URL(
-      decodeURIComponent(process.env.NEXT_PUBLIC_BOOKINGS_CHECKOUT_URL!)
-    );
-    const slotData = JSURL.stringify({
-      serviceId: service.id,
-      slot: { slot: selectedSlot?.slot },
-      timezone,
-    });
-    checkoutUrl.searchParams.set('selectedSlot', slotData);
-    checkoutUrl.searchParams.set('origin', window.location.origin);
-    checkoutUrl.searchParams.set(
-      'headlessExternalUrls',
-      JSURL.stringify({
-        'paid-plans': window.location.origin + '/plans',
-      })
-    );
-
-    // TODO: USE PR VERSION TILL BOOKINGS EXPOSE A FORMAL API FOR DEEP LINK
-    checkoutUrl.searchParams.set(
-      'bookings-form-widget-override',
-      // https://github.com/wix-private/bookings-booking-checkout-viewer/pull/570
-      '776076fcba105820efa8645dd02846d8441af73f559e59a6f1c8813d'
-    );
-
-    // window.location.href = checkoutUrl.toString();
   }, [selectedSlot, service.id, session, timezone]);
   useEffect(() => {
     setSelectedSlot(
