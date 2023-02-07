@@ -31,19 +31,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "@floating-ui/core@npm:1.1.1"
-  checksum: a8497bf981eedf652d275f7207342a9b24c1a67909dca9e042e2379b24321e6688c7774415f3ea607c466adf82b02d8779513f449376c46b2982f2380c80cd35
+"@floating-ui/core@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@floating-ui/core@npm:1.2.0"
+  checksum: 1afde471b0d2ba11e2cf416ef5ca9e6280e3f42542a707d958b66631fe2aa551272c1544a1e8ed4815bf562e4462adedb356ce3f2de5c1738d6aab1568f580f4
   languageName: node
   linkType: hard
 
 "@floating-ui/dom@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "@floating-ui/dom@npm:1.1.1"
+  version: 1.2.0
+  resolution: "@floating-ui/dom@npm:1.2.0"
   dependencies:
-    "@floating-ui/core": ^1.1.0
-  checksum: 8b7f3b98ed7ec0b634e4a0b735253b0442358c5cea8302935fc185b2bd882202a053622abe9248c76d0908645dd35f93adeaed2d64371b2ab76b36725ce3f7d3
+    "@floating-ui/core": ^1.2.0
+  checksum: 3f5cf02a784286473f451939b5641454e7256cdc7a6899a0ecc67e084a572b52e5e23a08a7e5b8ba186dca668815eba5ed6d69baec543abaeb5092d6c672f6b2
   languageName: node
   linkType: hard
 
@@ -443,28 +443,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/api-client@npm:^1.1.25":
-  version: 1.1.25
-  resolution: "@wix/api-client@npm:1.1.25"
+"@wix/api-client@npm:latest":
+  version: 1.1.29
+  resolution: "@wix/api-client@npm:1.1.29"
   dependencies:
     "@babel/runtime": ^7.20.13
-    "@wix/identity": ^1.0.5
+    "@wix/identity": ^1.0.6
     "@wix/image-kit": ^1.28.0
-    "@wix/sdk-types": ^1.1.25
+    "@wix/sdk-types": ^1.1.29
     querystring: ^0.2.1
     type-fest: ^2.19.0
-  checksum: 56f564edd434d19904364b8909f90b9250f87f40146c24f4582eb4ac7340fd5362c48e3d9ecf211309f8abb7da08d0d3f7e89511a74eb10d3d683a3784bfcf1e
+  checksum: 3dc528a4ec90301a1112c07b988860794a83714fe59796ed3211bac7d146926e08b5937af89bebb9312352e406ab7ba0d2fef787617e387c71ebe6b80322c09c
   languageName: node
   linkType: hard
 
 "@wix/bookings@npm:^1.0.12":
-  version: 1.0.12
-  resolution: "@wix/bookings@npm:1.0.12"
+  version: 1.0.21
+  resolution: "@wix/bookings@npm:1.0.21"
   dependencies:
     "@wix/metro-runtime": ^1.0.0
     "@wix/motion-edm-autogen-query-wrapper": ^1.0.0
     "@wix/sdk-types": ^1.0.0
-  checksum: 061a14f09f1896c1518d5d7e1e012ae433e4ced75a9384dc9cc55806c8ab72a61c80b612127a0ce877834c8d3cd1211266136c30141a2ac5a57c086409169fef
+  checksum: 01d957a58c3d88f9cc97db11340e35b89264dee915f4e01e5dc353dee78a07e5f62805080624add28226834dc334c7dc938284c23cd6cc9374d0934a01922128
   languageName: node
   linkType: hard
 
@@ -479,14 +479,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/identity@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@wix/identity@npm:1.0.5"
+"@wix/identity@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@wix/identity@npm:1.0.6"
   dependencies:
     "@wix/metro-runtime": ^1.0.0
     "@wix/motion-edm-autogen-query-wrapper": ^1.0.0
     "@wix/sdk-types": ^1.0.0
-  checksum: 7537aed103aa10cf994644bce330d6ba1ad7a51c590b5aa9ddc9d40ed71edf6ebdc2436dcb085f5b7f6127bbb54a8ecffe46257e7d16636265035933da704758
+  checksum: 27fc8f0c5259b9c44c6977bba414dea7d8f172d9962ac342f127f3250ddbb6b7d4568b023e648b66abc391b20edd2280d5e6557b20ca55ea6917cb0a28861da6
   languageName: node
   linkType: hard
 
@@ -613,12 +613,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/sdk-types@npm:^1.0.0, @wix/sdk-types@npm:^1.1.25":
-  version: 1.1.25
-  resolution: "@wix/sdk-types@npm:1.1.25"
+"@wix/sdk-types@npm:^1.0.0":
+  version: 1.1.28
+  resolution: "@wix/sdk-types@npm:1.1.28"
   dependencies:
     "@babel/runtime": ^7.20.13
-  checksum: 820f06c9115be982f50899bda27ab05d4796cde5b94eb7df705945ab0059480a3665746786a8a659a0662c3bd46018ebbafc4e9b5244dab76ff165759bff84ff
+  checksum: 6d692e9d6174b7140e042b55ca227c824cea29452232d237b414d3d25bbcc4dbcbf9e3eb7aa44a6a8e51bbab492c9f059cc71b87a82416099ffe855be290ea9b
+  languageName: node
+  linkType: hard
+
+"@wix/sdk-types@npm:^1.1.29":
+  version: 1.1.29
+  resolution: "@wix/sdk-types@npm:1.1.29"
+  dependencies:
+    "@babel/runtime": ^7.20.13
+  checksum: 7dd0a612f01c56e9c29680fdb24c6145aeee494a174ec7c128a83a36c86d7b7376f104a6d9cbbc3c0a85f0ef392730c5b7b8097d973d6c0a9881b58b8e11f5a5
   languageName: node
   linkType: hard
 
@@ -1332,9 +1341,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.284":
-  version: 1.4.284
-  resolution: "electron-to-chromium@npm:1.4.284"
-  checksum: be496e9dca6509dbdbb54dc32146fc99f8eb716d28a7ee8ccd3eba0066561df36fc51418d8bd7cf5a5891810bf56c0def3418e74248f51ea4a843d423603d10a
+  version: 1.4.286
+  resolution: "electron-to-chromium@npm:1.4.286"
+  checksum: 6b53e2aea63892cb4af85ea4ee5ed2b6d848713519987efcf4c1177a32e2fe6d04a7f591f5bcd1feab0b3c88890c6eaf65b6feb16c0e0319bf07e31de31930af
   languageName: node
   linkType: hard
 
@@ -2870,9 +2879,9 @@ __metadata:
   linkType: hard
 
 "minipass@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "minipass@npm:4.0.1"
-  checksum: 48eb3141cc247b44f738944cbd789aedeed9288ebdb64c7de9b3bf23e9e71d611381bfecf643d877d25f7ca9f3d5ab7b6757ef6f46282086812ac5372b7cd291
+  version: 4.0.2
+  resolution: "minipass@npm:4.0.2"
+  checksum: 2e4f4caaf85a45c01c6042adc43b5111a6113f62e300acf1db3b193ac3ec6e955bc893d6d8a08635598771a55a0f60487dcac59a1ac39557eb524295d4778c9e
   languageName: node
   linkType: hard
 
@@ -3032,9 +3041,9 @@ __metadata:
   linkType: hard
 
 "node-releases@npm:^2.0.8":
-  version: 2.0.9
-  resolution: "node-releases@npm:2.0.9"
-  checksum: 3ae6b1b300dc72c1a628861093d339a01aa017d3ad9017b0478384be29d6f9c93b9e26c91fce79728cecaadc04d0f16834b7ae1a018730e3e54962ec8c6aa86f
+  version: 2.0.10
+  resolution: "node-releases@npm:2.0.10"
+  checksum: d784ecde25696a15d449c4433077f5cce620ed30a1656c4abf31282bfc691a70d9618bae6868d247a67914d1be5cc4fde22f65a05f4398cdfb92e0fc83cadfbc
   languageName: node
   linkType: hard
 
@@ -4242,7 +4251,7 @@ __metadata:
     "@types/node": 18.11.8
     "@types/react": 18.0.24
     "@types/react-dom": 18.0.8
-    "@wix/api-client": ^1.1.25
+    "@wix/api-client": latest
     "@wix/bookings": ^1.0.12
     "@wix/redirects-api": ^1.0.3
     autoprefixer: ^10.4.13
