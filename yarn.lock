@@ -443,7 +443,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wix/api-client@npm:latest":
+"@wix/api-client@npm:^1.1.29":
   version: 1.1.29
   resolution: "@wix/api-client@npm:1.1.29"
   dependencies:
@@ -4251,7 +4251,7 @@ __metadata:
     "@types/node": 18.11.8
     "@types/react": 18.0.24
     "@types/react-dom": 18.0.8
-    "@wix/api-client": latest
+    "@wix/api-client": ^1.1.29
     "@wix/bookings": ^1.0.12
     "@wix/redirects-api": ^1.0.3
     autoprefixer: ^10.4.13
